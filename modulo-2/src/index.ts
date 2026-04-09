@@ -44,6 +44,19 @@ const estados: EstadoProyecto[] = [
 console.log("=== MØRK STUDIO — Reportes de Proyectos ===\n");
 estados.forEach((estado) => {
   console.log(generarReporte(estado));
+  function generarReporte(estado: EstadoProyecto): string {
+  switch (estado.tipo) {
+    case "PROPUESTA":
+      return `📋 PROPUESTA — Presupuesto estimado: ${estado.presupuestoEstimado}€`;
+    case "DESARROLLO":
+      return `⚙️  DESARROLLO — Entrega: ${estado.fechaEntrega.toLocaleDateString("es-ES")} | Completado: ${estado.porcentajeCompletado}%`;
+    case "FINALIZADO":
+      return `✅ FINALIZADO — Factura: ${estado.facturaTotal}€ | Valoración cliente: ${estado.valoracionCliente}/10`;
+    default:
+      const comprobacionExhaustiva: never = estado;
+      throw new Error(`Estado no manejado: ${JSON.stringify(comprobacionExhaustiva)}`);
+  }
+}
 });
 
 // Servicio genérico con Promesas
